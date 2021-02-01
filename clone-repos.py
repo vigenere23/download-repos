@@ -2,10 +2,11 @@ import os
 
 
 BRANCH = os.getenv("BRANCH")
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 
 
 def get_url(repo_name):
-    return f"https://github.com/glo2003/{repo_name}/archive/{BRANCH}.zip"
+    return f"https://{GITHUB_TOKEN}@github.com/glo2003/{repo_name}/archive/{BRANCH}.zip"
 
 
 with open("repo-names.txt", 'r') as repo_names:
