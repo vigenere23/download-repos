@@ -1,18 +1,19 @@
 import os
 
 
-TAG = os.getenv("TAG")
+BRANCH = os.getenv("BRANCH")
 
 
 def get_url(repo_name):
-    return f"https://github.com/glo2003/{repo_name}/archive/{TAG}.zip"
+    return f"https://github.com/glo2003/{repo_name}/archive/{BRANCH}.zip"
 
 
 with open("repo-names.txt", 'r') as repo_names:
-    for repo_name in repo_names.readlines():
+    for repo_name in repo_names.read().splitlines():
         url = get_url(repo_name)
+        output_path = f"{repo_name}.zip"
 
         try:
-            os.system(f"wget -L -O {repo_name}.zip {url}")
+            os.system(f"wget -L -O {output_path} {url} || rm -f {output_path}")
         except Exception:
-            print(f"Could not get repo '{repo_name}'")
+            pass

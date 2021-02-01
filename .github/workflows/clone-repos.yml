@@ -1,10 +1,10 @@
-name: Download projects
+name: Clone repos
 
 on:
   workflow_dispatch:
     inputs:
-      tag:
-        description: Tag
+      branch:
+        description: Branch/Tag
         required: true
 
 jobs:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      TAG: ${{ github.event.inputs.tag }}
+      BRANCH: ${{ github.event.inputs.branch }}
 
     steps:
     - uses: actions/checkout@v2
