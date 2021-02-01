@@ -1,9 +1,11 @@
 name: Download projects
 
 on:
-  schedule:
-    - cron: "38 3 1 2 *"
-    # - cron: "59 5 8 3 *"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Tag
+        required: true
 
 jobs:
   execute:
@@ -11,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      TAG: main
+      TAG: ${{ github.event.inputs.tag }}
 
     steps:
     - uses: actions/checkout@v2
