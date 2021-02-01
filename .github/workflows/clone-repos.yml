@@ -14,7 +14,7 @@ jobs:
 
     env:
       BRANCH: ${{ github.event.inputs.branch }}
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
 
     steps:
     - uses: actions/checkout@v2
