@@ -31,4 +31,6 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: projects
-        path: projects
+        path: |
+          **.zip
+        # path: projects

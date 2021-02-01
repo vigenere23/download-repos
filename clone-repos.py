@@ -32,8 +32,8 @@ with open('repo-names.txt', 'r') as repo_names:
         try:
             print(f"\nDownloading repo '{repo_name}/{BRANCH}'")
             execute(download_command)
-            print(f"Unzipping {output_path} to ./projects")
-            execute(unzip_command)
+            # print(f"Unzipping {output_path} to ./projects")
+            # execute(unzip_command)
             print('Done')
         except Exception as e:
             pass
