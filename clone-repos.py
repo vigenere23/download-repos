@@ -11,4 +11,8 @@ def get_url(repo_name):
 with open("repo-names.txt", 'r') as repo_names:
     for repo_name in repo_names.readlines():
         url = get_url(repo_name)
-        os.system(f"wget -L -O {repo_name}.zip {url}")
+
+        try:
+            os.system(f"wget -L -O {repo_name}.zip {url}")
+        except Exception:
+            print(f"Could not get repo '{repo_name}'")
