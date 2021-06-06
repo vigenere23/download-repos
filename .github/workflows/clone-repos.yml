@@ -9,28 +9,26 @@ on:
 
 jobs:
   execute:
-
     runs-on: ubuntu-latest
 
     env:
-      BRANCH: ${{ github.event.inputs.branch }}
       GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
 
-    - name: Clone repositories
-      run: python clone-repos.py
+      - name: Clone repositories
+        run: python clone-repos.py -b ${{ github.event.inputs.branch }}
 
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: projects
-        path: |
-          **.zip
-        # path: projects
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: projects
+          path: |
+            **.zip
+          # path: projects
