@@ -1,17 +1,21 @@
 import os
 import subprocess
+from argparse import ArgumentDefaultsHelpFormatter, ArgumentParser
+
+parser = ArgumentParser(formatter_class=ArgumentDefaultsHelpFormatter)
+parser.add_argument('-b --branch', metavar='<branch or tag>', help='Branch to clone', default='main')
+args = parser.parse_args()
 
 
-BRANCH = os.getenv('BRANCH') or 'main'
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
 
 
 def get_repo_url(repo_name: str) -> str:
-    return f'https://github.com/glo2003/{repo_name}/archive/{BRANCH}.zip'
+    return f'https://github.com/glo2003/{repo_name}/archive/{args.branch}.zip'
 
 
 def get_download_link(repo_url: str) -> str:
-    return f'https://github.com/{repo_url}/archive/{BRANCH}.zip'
+    return f'https://github.com/{repo_url}/archive/{args.branch}.zip'
 
 
 def get_org_name(repo_name: str) -> str:
@@ -39,7 +43,7 @@ with open('repo-urls.txt', 'r') as repo_names:
         # unzip_command = get_unzip_command(output_path)
 
         try:
-            print(f"\nDownloading repo '{repo_name}/{BRANCH}'")
+            print(f"\nDownloading repo '{repo_name}/{args.branch}'")
             execute(download_command)
             # print(f"Unzipping {output_path} to ./projects")
             # execute(unzip_command)
