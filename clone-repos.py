@@ -4,7 +4,7 @@ from pathlib import Path
 from argparse import ArgumentDefaultsHelpFormatter, ArgumentParser
 
 parser = ArgumentParser(formatter_class=ArgumentDefaultsHelpFormatter)
-parser.add_argument('-b', '--branch', metavar='<branch or tag>', help='Branch to clone', default='main')
+parser.add_argument('--ref', metavar='refs/tags/TAG, refs/heads/BRANCH, SHA', help='Ref to clone.', default='refs/heads/main')
 args = parser.parse_args()
 
 
@@ -15,12 +15,8 @@ if not GITHUB_TOKEN:
     raise ValueError("Missing CLONE_REPOS_GITHUB_TOKEN environment variable.")
 
 
-def get_repo_url(repo_name: str) -> str:
-    return f'https://github.com/glo2003/{repo_name}/archive/{args.branch}.zip'
-
-
 def get_download_link(repo_url: str) -> str:
-    return f'https://github.com/{repo_url}/archive/{args.branch}.zip'
+    return f'https://github.com/{repo_url}/archive/{args.ref}.zip'
 
 
 def get_org_name(repo_name: str) -> str:
@@ -43,7 +39,7 @@ def main():
     output_dir = os.path.join(Path.cwd(), 'projects')
     os.makedirs(output_dir, exist_ok=True)
 
-    print(f'Downloading repos from branch {args.branch}')
+    print(f'Downloading repos from ref {args.ref}')
 
     with open('repo-urls.txt', 'r') as repo_names:
         for repo_name in repo_names.read().splitlines():
@@ -55,13 +51,13 @@ def main():
             # unzip_command = get_unzip_command(output_path)
 
             try:
-                print(f"\nDownloading repo '{repo_name}'")
+                print(f"\nDownloading repo '{repo_name}' from URL '{url}'")
                 execute(download_command)
                 # print(f"Unzipping {output_path} to ./projects")
                 # execute(unzip_command)
                 print('Done')
-            except Exception as e:
-                print(f'Could not download this repo')
+            except Exception:
+                print(f"Could not download repo '{repo_name}'")
                 pass
 
 if __name__ == '__main__':
