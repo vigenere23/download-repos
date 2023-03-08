@@ -1,12 +1,21 @@
 name: Clone repos
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       branch:
+        type: string
         description: Ref (refs/heads/BRANCH, refs/tags/TAG, SHA)
         required: true
         default: refs/branch/main
+      repos:
+        type: string
+        description: Comma delimited repo list (OWNER/REPO)
+        required: true
+        default: refs/branch/main
+    secrets:
+      PAT:
+        required: true
 
 jobs:
   execute:
@@ -24,14 +33,12 @@ jobs:
           python-version: 3.8
 
       - name: Clone repositories
-        run: python clone-repos.py --ref ${{ github.event.inputs.branch }}
+        run: python clone-repos.py --ref ${{ github.event.inputs.branch }} --repos ${{ github.event.inputs.repos }} --output repos
 
-      - run: |
-          ls -lha
-          ls -lha projects
+      - run: ls -lha repos
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: projects
-          path: projects
+          name: repos
+          path: repos

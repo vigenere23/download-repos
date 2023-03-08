@@ -1,4 +1,4 @@
-projects/
+repos/
 *.zip
 __pycache__
 **/*.pyc
