@@ -4,8 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: Branch/Tag
+        description: Ref (refs/heads/BRANCH, refs/tags/TAG, SHA)
         required: true
+        default: refs/branch/main
 
 jobs:
   execute:
