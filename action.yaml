@@ -1,0 +1,40 @@
+name: Download repos
+description: Download multiple repos (.zip)
+
+inputs:
+  ref:
+    description: Ref (refs/heads/BRANCH, refs/tags/TAG, SHA)
+    required: true
+    default: refs/branch/main
+  repos:
+    description: Comma delimited repo list (OWNER/REPO)
+    required: true
+  output:
+    description: Output dir for downloaded repo
+    required: true
+  PAT:
+    description: Github Personal Access Token for accessing repos
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+  - uses: actions/checkout@v3
+
+  - name: Set up Python 3.8
+    uses: actions/setup-python@v2
+    with:
+      python-version: 3.8
+
+  - name: Clone repositories
+    run: python clone-repos.py --ref ${{ github.event.inputs.ref }} --repos ${{ github.event.inputs.repos }} --output ${{ github.event.inputs.output }}
+    shell: bash
+
+  - run: ls -lha ${{ github.event.inputs.output }}
+    shell: bash
+
+  # - name: Upload artifacts
+  #   uses: actions/upload-artifact@v2
+  #   with:
+  #     name: repos
+  #     path: repos
