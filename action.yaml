@@ -1,5 +1,5 @@
 name: Download repos
-description: Download multiple repos (.zip)
+description: Bulk-download repos as .zip
 branding:
   icon: download
   color: blue
@@ -27,11 +27,11 @@ runs:
     with:
       python-version: 3.8
 
-  - name: Clone repositories
-    run: python ${{ github.action_path }}/clone-repos.py --ref ${{ inputs.ref }} --output ${{ inputs.output-dir }} --repos ${{ inputs.repos }}
+  - name: Download repos
+    run: python ${{ github.action_path }}/download-repos.py --ref ${{ inputs.ref }} --output ${{ inputs.output-dir }} --repos ${{ inputs.repos }}
     shell: bash
     env:
-      CLONE_REPOS_GITHUB_TOKEN: ${{ inputs.access-token }}
+      DOWNLOAD_REPOS_GITHUB_TOKEN: ${{ inputs.access-token }}
 
   - run: echo "Downloaded the following repos :" && ls -lha ${{ inputs.output-dir }}
     shell: bash

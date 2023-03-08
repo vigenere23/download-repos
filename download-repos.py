@@ -10,11 +10,11 @@ parser.add_argument('-o', '--output', required=True, metavar='DIR', help='Output
 args = parser.parse_args()
 
 
-GITHUB_TOKEN = os.getenv('CLONE_REPOS_GITHUB_TOKEN')
+GITHUB_TOKEN = os.getenv('DOWNLOAD_REPOS_GITHUB_TOKEN')
 
 
 if not GITHUB_TOKEN:
-    raise ValueError("Missing CLONE_REPOS_GITHUB_TOKEN environment variable.")
+    raise ValueError("Missing DOWNLOAD_REPOS_GITHUB_TOKEN environment variable.")
 
 
 def get_download_link(repo_url: str) -> str:

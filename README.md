@@ -1,6 +1,6 @@
-# Clone repos
+# Download repos action
 
-A simple Github Action to clone repos.
+A simple Github Action to bulk-download repos.
 
 ## Usage
 
@@ -27,8 +27,7 @@ jobs:
       - id: preparation
         run: echo "repos=$(cat repos.txt | tr '\n' ' ')" >> $GITHUB_OUTPUT
 
-      - name: Clone repos
-        uses: vigenere23/clone-repos-action@main
+      - uses: vigenere23/download-repos@main
         with:
           output-dir: repos
           repos: ${{ steps.preparation.outputs.repos }}
