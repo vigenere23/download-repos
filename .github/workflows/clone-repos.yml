@@ -3,7 +3,7 @@ name: Clone repos
 on:
   workflow_call:
     inputs:
-      branch:
+      ref:
         type: string
         description: Ref (refs/heads/BRANCH, refs/tags/TAG, SHA)
         required: true
@@ -12,7 +12,6 @@ on:
         type: string
         description: Comma delimited repo list (OWNER/REPO)
         required: true
-        default: refs/branch/main
     secrets:
       PAT:
         required: true
@@ -33,7 +32,7 @@ jobs:
           python-version: 3.8
 
       - name: Clone repositories
-        run: python clone-repos.py --ref ${{ github.event.inputs.branch }} --repos ${{ github.event.inputs.repos }} --output repos
+        run: python clone-repos.py --ref ${{ github.event.inputs.ref }} --repos ${{ github.event.inputs.repos }} --output repos
 
       - run: ls -lha repos
 
