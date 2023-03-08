@@ -9,32 +9,26 @@ inputs:
   repos:
     description: Comma delimited repo list (OWNER/REPO)
     required: true
-  output:
-    description: Output dir for downloaded repo
+  output-dir:
+    description: Output directory for downloaded repo
     required: true
-  PAT:
+  access-token:
     description: Github Personal Access Token for accessing repos
     required: true
 
 runs:
   using: "composite"
   steps:
-  - uses: actions/checkout@v3
-
   - name: Set up Python 3.8
     uses: actions/setup-python@v2
     with:
       python-version: 3.8
 
   - name: Clone repositories
-    run: python clone-repos.py --ref ${{ github.event.inputs.ref }} --repos ${{ github.event.inputs.repos }} --output ${{ github.event.inputs.output }}
+    run: python ${{ github.action_path }}/clone-repos.py --ref ${{ inputs.ref }} --output ${{ inputs.output-dir }} --repos ${{ inputs.repos }}
     shell: bash
+    env:
+      CLONE_REPOS_GITHUB_TOKEN: ${{ inputs.access-token }}
 
-  - run: ls -lha ${{ github.event.inputs.output }}
+  - run: echo "Downloaded the following repos :" && ls -lha ${{ inputs.output-dir }}
     shell: bash
-
-  # - name: Upload artifacts
-  #   uses: actions/upload-artifact@v2
-  #   with:
-  #     name: repos
-  #     path: repos
