@@ -24,7 +24,7 @@ jobs:
           python-version: 3.8
 
       - name: Clone repositories
-        run: python clone-repos.py -b ${{ github.event.inputs.branch }}
+        run: python clone-repos.py --ref ${{ github.event.inputs.branch }}
 
       - run: |
           ls -lha
@@ -34,6 +34,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: projects
-          # path: |
-          #   **.zip
           path: projects
