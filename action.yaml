@@ -1,16 +1,19 @@
 name: Download repos
 description: Download multiple repos (.zip)
+branding:
+  icon: download
+  color: blue
 
 inputs:
   ref:
-    description: Ref (refs/heads/BRANCH, refs/tags/TAG, SHA)
+    description: Ref ({refs/heads/<BRANCH> | refs/tags/<TAG> | <SHA>})
     required: true
     default: refs/branch/main
   repos:
-    description: Comma delimited repo list (OWNER/REPO)
+    description: Space delimited repos list (<OWNER>/<REPO> [<OWNER>/<REPO> [...]])
     required: true
   output-dir:
-    description: Output directory for downloaded repo
+    description: Output directory for downloaded repo ({<ABSOLUTE_PATH> | <RELATIVE_PATH>})
     required: true
   access-token:
     description: Github Personal Access Token for accessing repos
