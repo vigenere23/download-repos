@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      CLONE_REPOS_GITHUB_TOKEN: ${{ secrets.glo2003_clone_repos }}
+      CLONE_REPOS_GITHUB_TOKEN: ${{ secrets.PAT }}
 
     steps:
       - uses: actions/checkout@v2
